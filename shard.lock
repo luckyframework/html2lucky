@@ -36,6 +36,10 @@ shards:
     github: luckyframework/lucky_router
     version: 0.2.0
 
+  myhtml:
+    github: kostya/myhtml
+    version: 0.27
+
   pg:
     github: will/crystal-pg
     version: 0.14.1
