@@ -42,6 +42,17 @@ describe HTML2Lucky::Converter do
     output.should eq(expected_output.strip)
   end
 
+  it "converts empty space into just one space" do
+    input = "<div>  \n\n  </div>"
+    expected_output = <<-CODE
+    div do
+      text " "
+    end
+    CODE
+    output = HTML2Lucky::Converter.new(input).convert
+    output.should eq(expected_output.strip)
+  end
+
   pending "doesn't crash on invalid input" do
     input = "<div <p>></p>"
     HTML2Lucky::Converter.new(input).convert

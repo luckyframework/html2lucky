@@ -18,16 +18,17 @@ class HTML2Lucky::Converter
       string.gsub(/\"/, "")
     end
     output = ""
+    padding = " " * (depth * 2)
     if tag.children.to_a.empty?
-      output += (" " * (depth * 2)) + "#{method_name} \"#{tag.tag_text}\""
+      output += padding + "#{method_name} \"#{squish(tag.tag_text)}\""
       output += ", #{attr_parameters.join(", ")}" if attr_parameters.any?
     else
-      output += (" " * (depth * 2)) + method_name.to_s
+      output += padding + method_name.to_s
       output += " " + attr_parameters.join(", ") if attr_parameters.any?
       output += " do\n"
       children_output = tag.children.map { |child_tag| convert_tag(child_tag, depth + 1).as(String) }
       output += children_output.join("\n")
-      output += "\n" + (" " * (depth * 2)) + "end"
+      output += "\n" + padding + "end"
     end
     output
   end
@@ -48,6 +49,12 @@ class HTML2Lucky::Converter
       "text"
     else
       tag_name
+    end
+  end
+
+  def squish(string : String)
+    string.gsub(/(\s)\s+/) do |str, match|
+      match[1]
     end
   end
 end
