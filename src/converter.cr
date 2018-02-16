@@ -20,8 +20,11 @@ class HTML2Lucky::Converter
     output = ""
     padding = " " * (depth * 2)
     if tag.children.to_a.empty?
-      output += padding + "#{method_name} \"#{squish(tag.tag_text)}\""
-      output += ", #{attr_parameters.join(", ")}" if attr_parameters.any?
+      squished_text = squish(tag.tag_text)
+      if !squished_text.nil?
+        output += padding + "#{method_name} \"#{squished_text}\""
+        output += ", #{attr_parameters.join(", ")}" if attr_parameters.any?
+      end
     else
       output += padding + method_name.to_s
       output += " " + attr_parameters.join(", ") if attr_parameters.any?
@@ -53,8 +56,11 @@ class HTML2Lucky::Converter
   end
 
   def squish(string : String)
+    if string =~ /\A\n+\Z/
+      return nil
+    end
     string.gsub(/(\s)\s+/) do |str, match|
-      match[1]
+      " "
     end
   end
 end
