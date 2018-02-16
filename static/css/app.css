@@ -6,3 +6,13 @@
 /* @import "mixins/**.pcss"; */
 /* For example, add `static/css/components/btn.pcss` and uncomment the next line */
 /* @import "components/**.pcss"; */
+
+.html-input{
+  margin: 10px 0px;
+}
+
+.output{
+  background: #EEE;
+  border: 1px solid #CCC;
+  padding: 10px;
+}

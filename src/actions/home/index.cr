@@ -1,5 +1,5 @@
 class Home::Index < BrowserAction
   get "/" do
-    render Home::IndexPage, output: "nothing yet", input: "Put html here"
+    render Home::IndexPage, output: "", input: ""
   end
 end
