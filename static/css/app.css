@@ -7,6 +7,11 @@
 /* For example, add `static/css/components/btn.pcss` and uncomment the next line */
 /* @import "components/**.pcss"; */
 
+
+.navbar-wrapper{
+  margin-bottom: 40px;
+}
+
 .html-input{
   margin: 10px 0px;
 }
@@ -15,4 +20,25 @@
   background: #EEE;
   border: 1px solid #CCC;
   padding: 10px;
+}
+
+.content-container{
+  margin-bottom: 40px;
+}
+
+.details{
+}
+.quote{
+  border-left: 10px solid #EEE;
+  color: #666;
+  padding: 10px;
+}
+
+footer{
+  margin-top: 40px;
+  border-top: 1px solid #EEE;
+  padding: 10px 0px;
+  a{
+    margin-right: 20px;
+  }
 }

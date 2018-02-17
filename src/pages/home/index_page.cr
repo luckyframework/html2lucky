@@ -3,7 +3,7 @@ class Home::IndexPage < MainLayout
   needs output : String
 
   def content
-    div class: "container" do
+    div class: "container content-container" do
       div class: "row" do
         div class: "col-lg" do
           h1 "Input HTML"

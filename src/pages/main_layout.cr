@@ -26,7 +26,22 @@ abstract class MainLayout
 
       body do
         render_flash
-        nav class: "navbar navbar-light bg-light" do
+        navbar
+        content
+        details
+        render_footer
+      end
+    end
+  end
+
+  def page_title
+    "HTML2Lucky - Convert plain HTML into Lucky Syntax"
+  end
+
+  def navbar
+    div class: "navbar-wrapper bg-light" do
+      div class: "container navbar-container" do
+        nav class: "navbar navbar-light" do
           span class: "navbar-brand mb-0 h1" do
             text "HTML2Lucky"
             text " "
@@ -35,12 +50,25 @@ abstract class MainLayout
             end
           end
         end
-        content
       end
     end
   end
 
-  def page_title
-    "Welcome to Lucky"
+  def details
+    div class: "container" do
+      para "What are the benefits of Lucky syntax over plain HTML?"
+      para "Here's what Lucky's website has to say:"
+      para class: "quote" do
+        text "Lucky uses Crystal classes and methods to generate HTML. It may sound crazy at first, but the advantages are numerous. Never accidentally print nil to the page, extract and share partials using regular methods. Easily read an entire page by looking at just the render method. Text is automatically escaped for security. And it’s all type safe. That means no more unmatched closing tags, and never rendering a page with missing data."
+      end
+    end
+  end
+
+  def render_footer
+    footer class: "container" do
+      link "GitHub", "https://github.com/yjukaku/html2lucky"
+      link "Report a bug", "https://github.com/yjukaku/html2lucky/issues/new"
+      link "What is Lucky?", "https://luckyframework.org"
+    end
   end
 end
