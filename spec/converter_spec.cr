@@ -18,6 +18,18 @@ describe HTML2Lucky::Converter do
     output.should eq(expected_output.strip)
   end
 
+  it "uses block syntax when inner text has new lines" do
+    input = "<div class='some-class'>First Line\nSecond Line</div>"
+    expected_output = <<-CODE
+    div class: "some-class" do
+      text "First Line "
+      text "Second Line"
+    end
+    CODE
+    output = HTML2Lucky::Converter.new(input).convert
+    output.should eq(expected_output.strip)
+  end
+
   it "includes simple attributes" do
     input = "<div class='some-class'>Hello</div>"
     expected_output = <<-CODE
@@ -28,9 +40,18 @@ describe HTML2Lucky::Converter do
   end
 
   it "includes multiple attributes" do
-    input = "<div class='some-class-1 some-class-2' data-id='123'>Hello</div>"
+    input = "<div class='some-class-1 some-class-2' id='abc'>Hello</div>"
     expected_output = <<-CODE
-    div "Hello", class: "some-class-1 some-class-2", "data-id": "123"
+    div "Hello", class: "some-class-1 some-class-2", id: "abc"
+    CODE
+    output = HTML2Lucky::Converter.new(input).convert
+    output.should eq(expected_output.strip)
+  end
+
+  it "includes attributes that need quoting" do
+    input = "<div class='some-class-1' data-id='123'>Hello</div>"
+    expected_output = <<-CODE
+    div "Hello", class: "some-class-1", "data-id": "123"
     CODE
     output = HTML2Lucky::Converter.new(input).convert
     output.should eq(expected_output.strip)
