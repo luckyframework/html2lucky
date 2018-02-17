@@ -8,9 +8,7 @@ describe HTML2Lucky::Converter do
     div do
       para do
         text "Before Link"
-        a do
-          text "Link"
-        end
+        a "Link"
         text " After Link"
       end
     end
@@ -23,9 +21,7 @@ describe HTML2Lucky::Converter do
   it "includes simple attributes" do
     input = "<div class='some-class'>Hello</div>"
     expected_output = <<-CODE
-    div class: "some-class" do
-      text "Hello"
-    end
+    div "Hello", class: "some-class"
     CODE
     output = HTML2Lucky::Converter.new(input).convert
     output.should eq(expected_output.strip)
@@ -34,9 +30,7 @@ describe HTML2Lucky::Converter do
   it "includes multiple attributes" do
     input = "<div class='some-class-1 some-class-2' data-id='123'>Hello</div>"
     expected_output = <<-CODE
-    div class: "some-class-1 some-class-2", "data-id": "123" do
-      text "Hello"
-    end
+    div "Hello", class: "some-class-1 some-class-2", "data-id": "123"
     CODE
     output = HTML2Lucky::Converter.new(input).convert
     output.should eq(expected_output.strip)
@@ -80,6 +74,19 @@ describe HTML2Lucky::Converter do
     expected_output = <<-CODE
     div do
       text "Hello "
+    end
+    CODE
+    output = HTML2Lucky::Converter.new(input).convert
+    output.should eq(expected_output.strip)
+  end
+
+  it "converts new lines inside of text into multiple text calls" do
+    input = "<div>First\nSecond\nThird</div>"
+    expected_output = <<-CODE
+    div do
+      text "First "
+      text "Second "
+      text "Third"
     end
     CODE
     output = HTML2Lucky::Converter.new(input).convert
