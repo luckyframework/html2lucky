@@ -22,15 +22,18 @@ class HTML2Lucky::Converter
     output = ""
     padding = " " * (depth * 2)
     if no_children?(tag)
-      squished_text = squish(tag.tag_text)
-      output += output_for_text_tag(squished_text, padding)
+      if text_tag?(tag)
+        squished_text = squish(tag.tag_text)
+        output += output_for_text_tag(squished_text, padding)
+      else
+        output += padding + method_call_with_attributes(method_name, attr_parameters, true)
+      end
     elsif single_line_tag?(tag)
       output += padding + method_name.to_s + " "
-      output += wrap_quotes(tag.children.first.tag_text)
+      output += wrap_quotes(squish(tag.children.first.tag_text))
       output += ", " + attr_parameters.join(", ") if attr_parameters.any?
     else
-      output += padding + method_name.to_s
-      output += " " + attr_parameters.join(", ") if attr_parameters.any?
+      output += padding + method_call_with_attributes(method_name, attr_parameters, false)
       output += " do\n"
       children_output = tag.children.map { |child_tag| convert_tag(child_tag, depth + 1).as(String) }
       output += children_output.join("\n")
@@ -47,6 +50,8 @@ class HTML2Lucky::Converter
     return false if tag.children.to_a.size != 1
     child_tag = tag.children.to_a[0]
     return false unless text_tag?(child_tag)
+    return true if child_tag.tag_text == ""
+    return true if child_tag.tag_text =~ /\A\s*\Z/
     return false if child_tag.tag_text =~ /\n/
     true
   end
@@ -68,6 +73,17 @@ class HTML2Lucky::Converter
     else
       tag_name
     end
+  end
+
+  def method_call_with_attributes(method_name, attr_parameters, oneliner)
+    output = method_name.to_s
+    if oneliner
+      output += " \"\""
+    end
+    if attr_parameters.any?
+      output += " " + attr_parameters.join(", ")
+    end
+    output
   end
 
   def text_tag?(tag)

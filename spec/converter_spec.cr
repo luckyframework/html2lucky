@@ -30,6 +30,15 @@ describe HTML2Lucky::Converter do
     output.should eq(expected_output.strip)
   end
 
+  it "handles empty tags properly" do
+    input = "<div></div>"
+    expected_output = <<-CODE
+    div ""
+    CODE
+    output = HTML2Lucky::Converter.new(input).convert
+    output.should eq(expected_output.strip)
+  end
+
   it "includes simple attributes" do
     input = "<div class='some-class'>Hello</div>"
     expected_output = <<-CODE
@@ -60,20 +69,25 @@ describe HTML2Lucky::Converter do
   it "converts multiple empty spaces into just one space" do
     input = "<div>  \n\n  </div>"
     expected_output = <<-CODE
-    div do
-      text " "
-    end
+    div " "
     CODE
     output = HTML2Lucky::Converter.new(input).convert
     output.should eq(expected_output.strip)
   end
 
-  it "converts just new lines into a space" do
+  it "converts a tag with just new lines into a space" do
     input = "<div>\n</div>"
     expected_output = <<-CODE
-    div do
-      text " "
-    end
+    div " "
+    CODE
+    output = HTML2Lucky::Converter.new(input).convert
+    output.should eq(expected_output.strip)
+  end
+
+  it "converts just a tag with attributes and new lines into a tag with attributes and a space" do
+    input = "<div class='some-class'>\n</div>"
+    expected_output = <<-CODE
+    div " ", class: "some-class"
     CODE
     output = HTML2Lucky::Converter.new(input).convert
     output.should eq(expected_output.strip)
