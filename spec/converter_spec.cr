@@ -53,11 +53,33 @@ describe HTML2Lucky::Converter do
     output.should eq(expected_output.strip)
   end
 
-  it "converts new lines into nothing" do
+  it "converts just new lines into a space" do
     input = "<div>\n</div>"
     expected_output = <<-CODE
     div do
       text " "
+    end
+    CODE
+    output = HTML2Lucky::Converter.new(input).convert
+    output.should eq(expected_output.strip)
+  end
+
+  it "converts leading new lines into a space" do
+    input = "<div>\nHello</div>"
+    expected_output = <<-CODE
+    div do
+      text " Hello"
+    end
+    CODE
+    output = HTML2Lucky::Converter.new(input).convert
+    output.should eq(expected_output.strip)
+  end
+
+  it "converts trailing new lines into a space" do
+    input = "<div>Hello\n</div>"
+    expected_output = <<-CODE
+    div do
+      text "Hello "
     end
     CODE
     output = HTML2Lucky::Converter.new(input).convert
