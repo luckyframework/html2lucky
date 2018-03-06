@@ -35,7 +35,10 @@ class HTML2Lucky::Converter
     else
       output += padding + method_call_with_attributes(method_name, attr_parameters, false)
       output += " do\n"
-      children_output = tag.children.map { |child_tag| convert_tag(child_tag, depth + 1).as(String) }
+      children_tags = tag.children.to_a
+      children_tags.shift if empty_text_tag?(children_tags.first)
+      children_tags.pop if empty_text_tag?(children_tags.last)
+      children_output = children_tags.map { |child_tag| convert_tag(child_tag, depth + 1).as(String) }
       output += children_output.join("\n")
       output += "\n" + padding + "end"
     end
@@ -88,6 +91,11 @@ class HTML2Lucky::Converter
 
   def text_tag?(tag)
     tag.tag_name == TEXT_TAG_NAME
+  end
+
+  def empty_text_tag?(tag)
+    return false unless text_tag?(tag)
+    tag.tag_text =~ /\A\s*\Z/
   end
 
   def output_for_text_tag(text, padding) : String

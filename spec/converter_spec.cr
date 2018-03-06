@@ -104,6 +104,28 @@ describe HTML2Lucky::Converter do
     output.should eq(expected_output.strip)
   end
 
+  it "removes leading space" do
+    input = "<div> <a>Link</a></div>"
+    expected_output = <<-CODE
+    div do
+      a "Link"
+    end
+    CODE
+    output = HTML2Lucky::Converter.new(input).convert
+    output.should eq(expected_output.strip)
+  end
+
+  it "removes trailing space" do
+    input = "<div><a>Link</a> </div>"
+    expected_output = <<-CODE
+    div do
+      a "Link"
+    end
+    CODE
+    output = HTML2Lucky::Converter.new(input).convert
+    output.should eq(expected_output.strip)
+  end
+
   it "converts trailing new lines into a space" do
     input = "<div>Hello\n</div>"
     expected_output = <<-CODE
