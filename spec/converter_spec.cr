@@ -103,6 +103,17 @@ describe HTML2Lucky::Converter do
     output = HTML2Lucky::Converter.new(input).convert
     output.should eq(expected_output.strip)
   end
+  
+  it "converts form into a Lucky form" do
+    input = "<form action='/'><input name='data'></form>"
+    expected_output = <<-CODE
+    form_for action: "/" do
+      input name: "data"
+    end
+    CODE
+    output = HTML2Lucky::Converter.new(input).convert
+    output.should eq(expected_output.strip)
+  end
 
   it "removes leading space" do
     input = "<div> <a>Link</a></div>"
