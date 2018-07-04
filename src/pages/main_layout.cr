@@ -1,14 +1,5 @@
 abstract class MainLayout
-  include Lucky::HTMLPage
-  include Shared::FieldErrorsComponent
-  include Shared::FlashComponent
-
-  # You can put things here that all pages need
-  #
-  # Example:
-  #   needs current_user : User
-
-  abstract def content
+  include Shared::Layout
 
   def render
     html_doctype
