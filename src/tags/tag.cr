@@ -35,13 +35,17 @@ abstract class HTML2Lucky::Tag
   def method_for
     if renamed_tag_method = Lucky::BaseTags::RENAMED_TAGS.to_h.invert[tag_name]?
       renamed_tag_method
-    elsif (Lucky::BaseTags::TAGS + Lucky::BaseTags::EMPTY_TAGS).map(&.to_s).includes?(tag_name)
-      tag_name
     elsif tag_name == TEXT_TAG_NAME
       "text"
-    else
+    elsif custom_tag?
       "tag #{wrap_quotes(tag_name)}"
+    else
+      tag_name
     end
+  end
+
+  private def custom_tag?
+    !(Lucky::BaseTags::TAGS + Lucky::BaseTags::EMPTY_TAGS).map(&.to_s).includes?(tag_name)
   end
 
   def method_name
@@ -60,7 +64,12 @@ abstract class HTML2Lucky::Tag
     output = method_name.to_s
     output = yield output
     if attr_parameters.any?
-      output = output + ", " + attr_parameters.join(", ")
+      if custom_tag?
+        output = output + ", "
+      else
+        output = output + " "
+      end
+      output = output + attr_parameters.join(", ")
     end
     output
   end

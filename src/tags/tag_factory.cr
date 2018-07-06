@@ -13,16 +13,20 @@ class HTML2Lucky::TagFactory
   end
 
   def build : Tag
+    tag_class.new(tag, depth)
+  end
+
+  private def tag_class : Tag.class
     if no_children?(tag)
       if text_tag?(tag)
-        TextTag.new(tag, depth)
+        TextTag
       else
-        TagWithoutChildren.new(tag, depth)
+        TagWithoutChildren
       end
     elsif single_line_tag?(tag)
-      SingleLineTag.new(tag, depth)
+      SingleLineTag
     else
-      TagWithChildren.new(tag, depth)
+      TagWithChildren
     end
   end
 
