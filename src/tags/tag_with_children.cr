@@ -2,7 +2,9 @@ require "myhtml"
 
 class HTML2Lucky::TagWithChildren < HTML2Lucky::Tag
   def print_io(io)
-    io << padding + method_call_with_attributes(method_name, attr_parameters, false)
+    p! method_call_with_attributes(oneliner: false)
+    io << padding
+    io << method_call_with_attributes(oneliner: false)
     io << " do\n"
     children_tags = tag.children.to_a
     children_tags.shift if empty_text_tag?(children_tags.first)

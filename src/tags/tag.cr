@@ -32,15 +32,6 @@ abstract class HTML2Lucky::Tag
     true
   end
 
-  def convert_attributes_to_parameters(attributes)
-    attr_parameters = attributes.map do |key, value|
-      if Symbol.needs_quotes?(key)
-        key = "\"#{key}\""
-      end
-      "#{key}: \"#{value}\""
-    end
-  end
-
   def method_for(tag_name : String)
     if renamed_tag_method = Lucky::BaseTags::RENAMED_TAGS.to_h.invert[tag_name]?
       renamed_tag_method
@@ -55,20 +46,29 @@ abstract class HTML2Lucky::Tag
     method_for(tag.tag_name)
   end
 
-  def method_call_with_attributes(method_name, attr_parameters, oneliner)
+  def method_call_with_attributes(oneliner) : String
     output = method_name.to_s
     if oneliner
-      output + " \"\""
+      output = output + " \"\""
     end
     if attr_parameters.any?
-      output + " " + attr_parameters.join(", ")
+      output = output + " " + attr_parameters.join(", ")
     end
     output
   end
 
   def attr_parameters
-    convert_attributes_to_parameters(tag.attributes).sort_by do |string|
+    convert_attributes_to_parameters.sort_by do |string|
       string.gsub(/\"/, "")
+    end
+  end
+
+  def convert_attributes_to_parameters
+    tag.attributes.map do |key, value|
+      if Symbol.needs_quotes?(key)
+        key = "\"#{key}\""
+      end
+      "#{key}: \"#{value}\""
     end
   end
 
