@@ -59,17 +59,6 @@ class HTML2Lucky::TagFactory
     end
   end
 
-  def method_call_with_attributes(method_name, attr_parameters, oneliner)
-    output = method_name.to_s
-    if oneliner
-      output + " \"\""
-    end
-    if attr_parameters.any?
-      output + " " + attr_parameters.join(", ")
-    end
-    output
-  end
-
   def text_tag?(tag)
     tag.tag_name == TEXT_TAG_NAME
   end

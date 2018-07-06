@@ -46,11 +46,8 @@ abstract class HTML2Lucky::Tag
     method_for(tag.tag_name)
   end
 
-  def method_call_with_attributes(oneliner) : String
+  def method_call_with_attributes : String
     output = method_name.to_s
-    if oneliner
-      output = output + " \"\""
-    end
     if attr_parameters.any?
       output = output + " " + attr_parameters.join(", ")
     end
