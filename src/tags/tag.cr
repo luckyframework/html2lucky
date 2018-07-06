@@ -32,7 +32,7 @@ abstract class HTML2Lucky::Tag
     true
   end
 
-  def method_for(tag_name : String)
+  def method_for
     if renamed_tag_method = Lucky::BaseTags::RENAMED_TAGS.to_h.invert[tag_name]?
       renamed_tag_method
     elsif (Lucky::BaseTags::TAGS + Lucky::BaseTags::EMPTY_TAGS).map(&.to_s).includes?(tag_name)
@@ -45,13 +45,22 @@ abstract class HTML2Lucky::Tag
   end
 
   def method_name
-    method_for(tag.tag_name)
+    method_for
+  end
+
+  private def tag_name
+    tag.tag_name
+  end
+
+  def method_call_with_attributes : String
+    method_call_with_attributes { |html| html }
   end
 
   def method_call_with_attributes : String
     output = method_name.to_s
+    output = yield output
     if attr_parameters.any?
-      output = output + " " + attr_parameters.join(", ")
+      output = output + ", " + attr_parameters.join(", ")
     end
     output
   end

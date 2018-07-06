@@ -2,9 +2,11 @@ require "myhtml"
 
 class HTML2Lucky::SingleLineTag < HTML2Lucky::Tag
   def print_io(io)
-    io << padding + method_name.to_s + " "
-    io << wrap_quotes(squish(tag.children.first.tag_text))
-    io << ", " + attr_parameters.join(", ") if attr_parameters.any?
+    io << padding
+    io << method_call_with_attributes do |html|
+      html += ", "
+      html += wrap_quotes(squish(tag.children.first.tag_text))
+    end
     io << "\n"
   end
 end

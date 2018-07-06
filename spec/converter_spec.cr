@@ -196,7 +196,6 @@ describe HTML2Lucky::Converter do
     <foo-bar></foo-bar>
     <foo-bar class="foo"></foo-bar>
     <foo-bar class="foo">text</foo-bar>
-    <foo-bar/>
     <div>
       <foo-bar class="foo">
         text
@@ -211,10 +210,9 @@ describe HTML2Lucky::Converter do
     tag "foo-bar"
     tag "foo-bar", class: "foo"
     tag "foo-bar", "text", class: "foo"
-    tag "foo-bar"
     div do
       tag "foo-bar", class: "foo" do
-        text "text"
+        text " text "
       end
     end
     CODE
