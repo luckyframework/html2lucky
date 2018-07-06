@@ -1,5 +1,6 @@
 require "myhtml"
-require "./tag"
+require "./tags/tag"
+require "./tags/*"
 
 class HTML2Lucky::Converter
   getter output = IO::Memory.new
@@ -7,16 +8,16 @@ class HTML2Lucky::Converter
   def initialize(@input : String)
   end
 
-  def convert
+  def convert : String
     html = Myhtml::Parser.new(@input)
     body = html.body!
-    body.children.map do |child_tag|
+    body.children.each do |child_tag|
       convert_tag(child_tag)
-    end.join("\n")
+    end
+    output.to_s
   end
 
-  def convert_tag(tag, depth = 0) : String
-    Tag.new(node: tag, depth: depth).print_to(output)
-    output.to_s
+  def convert_tag(tag)
+    TagFactory.new(tag, depth: 0).build.print_io(output)
   end
 end

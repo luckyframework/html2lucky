@@ -1,6 +1,6 @@
 require "myhtml"
 
-class HTML2Lucky::Tag
+class HTML2Lucky::TagFactory
   TEXT_TAG_NAME = "-text"
 
   getter depth
@@ -12,34 +12,18 @@ class HTML2Lucky::Tag
     @node
   end
 
-  def print_to(output : IO) : IO
-    method_name = method_for(tag.tag_name)
-    attr_parameters = convert_attributes_to_parameters(tag.attributes).sort_by do |string|
-      string.gsub(/\"/, "")
-    end
-    padding = " " * (depth * 2)
+  def build : Tag
     if no_children?(tag)
       if text_tag?(tag)
-        squished_text = squish(tag.tag_text)
-        output << output_for_text_tag(squished_text, padding)
+        TextTag.new(tag)
       else
-        output << padding << method_call_with_attributes(method_name, attr_parameters, true)
+        TagWithoutChildren.new(tag)
       end
     elsif single_line_tag?(tag)
-      output << padding << method_name.to_s << " "
-      output << wrap_quotes(squish(tag.children.first.tag_text))
-      output << ", " << attr_parameters.join(", ") if attr_parameters.any?
+      SingleLineTag.new(tag)
     else
-      output << padding + method_call_with_attributes(method_name, attr_parameters, false)
-      output << " do\n"
-      children_tags = tag.children.to_a
-      children_tags.shift if empty_text_tag?(children_tags.first)
-      children_tags.pop if empty_text_tag?(children_tags.last)
-      children_tags.each { |child_tag| Tag.new(child_tag, depth + 1).print_to(output) }
-      # output << children_output.join("\n")
-      output << "\n" << padding << "end"
+      TagWithChildren.new(tag, depth: depth)
     end
-    output
   end
 
   def no_children?(tag)
@@ -48,7 +32,7 @@ class HTML2Lucky::Tag
 
   def single_line_tag?(tag)
     return false if tag.children.to_a.size != 1
-    child_tag = tag.children.to_a[0]
+    child_tag = tag.children.to_a.first
     return false unless text_tag?(child_tag)
     return true if child_tag.tag_text == ""
     return true if child_tag.tag_text =~ /\A\s*\Z/
