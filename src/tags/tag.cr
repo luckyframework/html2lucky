@@ -35,10 +35,12 @@ abstract class HTML2Lucky::Tag
   def method_for(tag_name : String)
     if renamed_tag_method = Lucky::BaseTags::RENAMED_TAGS.to_h.invert[tag_name]?
       renamed_tag_method
+    elsif (Lucky::BaseTags::TAGS + Lucky::BaseTags::EMPTY_TAGS).map(&.to_s).includes?(tag_name)
+      tag_name
     elsif tag_name == TEXT_TAG_NAME
       "text"
     else
-      tag_name
+      "tag #{wrap_quotes(tag_name)}"
     end
   end
 

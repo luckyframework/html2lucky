@@ -190,6 +190,36 @@ describe HTML2Lucky::Converter do
     CODE
   end
 
+  it "works with custom tags" do
+    input = <<-HTML
+    <foo></foo>
+    <foo-bar></foo-bar>
+    <foo-bar class="foo"></foo-bar>
+    <foo-bar class="foo">text</foo-bar>
+    <foo-bar/>
+    <div>
+      <foo-bar class="foo">
+        text
+      </foo-bar>
+    </div>
+    HTML
+
+    output = HTML2Lucky::Converter.new(input).convert
+
+    output.should eq_html <<-CODE
+    tag "foo"
+    tag "foo-bar"
+    tag "foo-bar", class: "foo"
+    tag "foo-bar", "text", class: "foo"
+    tag "foo-bar"
+    div do
+      tag "foo-bar", class: "foo" do
+        text "text"
+      end
+    end
+    CODE
+  end
+
   pending "doesn't crash on invalid input" do
     input = "<div <p>></p>"
     HTML2Lucky::Converter.new(input).convert
