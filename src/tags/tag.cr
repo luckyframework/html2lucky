@@ -62,11 +62,20 @@ abstract class HTML2Lucky::Tag
 
   def convert_attributes_to_parameters
     tag.attributes.map do |key, value|
-      if Symbol.needs_quotes?(key)
-        key = "\"#{key}\""
+      if lucky_can_handle_as_symbol?(key)
+        "#{key.tr("-", "_")}: \"#{value}\""
+      else
+        "#{wrap_quotes(key)}: \"#{value}\""
       end
-      "#{key}: \"#{value}\""
     end
+  end
+
+  private def lucky_can_handle_as_symbol?(key)
+    contains_only_alphanumeric_or_dashes?(key)
+  end
+
+  private def contains_only_alphanumeric_or_dashes?(key) : Bool
+    !(key =~ /[^\d[a-zA-Z]\-]/)
   end
 
   def text_tag?(tag)

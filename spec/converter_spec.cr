@@ -59,7 +59,7 @@ describe HTML2Lucky::Converter do
   it "includes attributes that need quoting" do
     input = "<div class='some-class-1' data-id='123'>Hello</div>"
     expected_output = <<-CODE
-    div "Hello", class: "some-class-1", "data-id": "123"
+    div "Hello", class: "some-class-1", data_id: "123"
     CODE
     output = HTML2Lucky::Converter.new(input).convert
     output.should eq_html(expected_output.strip)
@@ -167,6 +167,27 @@ describe HTML2Lucky::Converter do
 
     output.should eq_html <<-CODE
     div class: "foo"
+    CODE
+  end
+
+  it "prints quotes around weird attributes names" do
+    input = "<div @click.prevent='foo'></div>"
+
+    output = HTML2Lucky::Converter.new(input).convert
+
+    output.should eq_html <<-CODE
+    div "@click.prevent": "foo"
+    CODE
+  end
+
+  pending "prints quotes when using underscores" do
+    # TODO: Check Lucky itself
+    input = "<div underscore_attribute='foo'></div>"
+
+    output = HTML2Lucky::Converter.new(input).convert
+
+    output.should eq_html <<-CODE
+    div "underscore_attribute": "foo"
     CODE
   end
 
