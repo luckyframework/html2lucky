@@ -15,7 +15,7 @@ describe HTML2Lucky::Converter do
     CODE
 
     output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
+    output.should eq_html(expected_output.strip)
   end
 
   it "uses block syntax when inner text has new lines" do
@@ -27,7 +27,7 @@ describe HTML2Lucky::Converter do
     end
     CODE
     output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
+    output.should eq_html(expected_output.strip)
   end
 
   it "handles empty tags properly" do
@@ -36,7 +36,7 @@ describe HTML2Lucky::Converter do
     div ""
     CODE
     output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
+    output.should eq_html(expected_output.strip)
   end
 
   it "includes simple attributes" do
@@ -45,7 +45,7 @@ describe HTML2Lucky::Converter do
     div "Hello", class: "some-class"
     CODE
     output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
+    output.should eq_html(expected_output.strip)
   end
 
   it "includes multiple attributes" do
@@ -54,7 +54,7 @@ describe HTML2Lucky::Converter do
     div "Hello", class: "some-class-1 some-class-2", id: "abc"
     CODE
     output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
+    output.should eq_html(expected_output.strip)
   end
 
   it "includes attributes that need quoting" do
@@ -63,7 +63,7 @@ describe HTML2Lucky::Converter do
     div "Hello", class: "some-class-1", "data-id": "123"
     CODE
     output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
+    output.should eq_html(expected_output.strip)
   end
 
   it "converts multiple empty spaces into just one space" do
@@ -72,7 +72,7 @@ describe HTML2Lucky::Converter do
     div " "
     CODE
     output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
+    output.should eq_html(expected_output.strip)
   end
 
   it "converts a tag with just new lines into a space" do
@@ -81,7 +81,7 @@ describe HTML2Lucky::Converter do
     div " "
     CODE
     output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
+    output.should eq_html(expected_output.strip)
   end
 
   it "converts just a tag with attributes and new lines into a tag with attributes and a space" do
@@ -90,7 +90,7 @@ describe HTML2Lucky::Converter do
     div " ", class: "some-class"
     CODE
     output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
+    output.should eq_html(expected_output.strip)
   end
 
   it "converts leading new lines into a space" do
@@ -101,7 +101,7 @@ describe HTML2Lucky::Converter do
     end
     CODE
     output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
+    output.should eq_html(expected_output.strip)
   end
 
   it "removes leading space" do
@@ -112,7 +112,7 @@ describe HTML2Lucky::Converter do
     end
     CODE
     output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
+    output.should eq_html(expected_output.strip)
   end
 
   it "removes trailing space" do
@@ -123,35 +123,41 @@ describe HTML2Lucky::Converter do
     end
     CODE
     output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
+    output.should eq_html(expected_output.strip)
   end
 
   it "converts trailing new lines into a space" do
     input = "<div>Hello\n</div>"
-    expected_output = <<-CODE
+
+    output = HTML2Lucky::Converter.new(input).convert
+
+    output.should eq_html <<-CODE
     div do
       text "Hello "
     end
     CODE
-    output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
   end
 
   it "converts new lines inside of text into multiple text calls" do
     input = "<div>First\nSecond\nThird</div>"
-    expected_output = <<-CODE
+
+    output = HTML2Lucky::Converter.new(input).convert
+
+    output.should eq_html <<-CODE
     div do
       text "First "
       text "Second "
       text "Third"
     end
     CODE
-    output = HTML2Lucky::Converter.new(input).convert
-    output.should eq(expected_output.strip)
   end
 
   pending "doesn't crash on invalid input" do
     input = "<div <p>></p>"
     HTML2Lucky::Converter.new(input).convert
   end
+end
+
+private def eq_html(html)
+  eq html + "\n"
 end

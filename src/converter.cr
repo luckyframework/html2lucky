@@ -13,7 +13,6 @@ class HTML2Lucky::Converter
     body = html.body!
     body.children.each do |child_tag|
       convert_tag(child_tag)
-      output << "\n"
     end
     output.to_s
   end

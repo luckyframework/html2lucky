@@ -81,14 +81,19 @@ abstract class HTML2Lucky::Tag
     tag.tag_text =~ /\A\s*\Z/
   end
 
-  def output_for_text_tag(text, padding) : String
-    return padding + "text \" \"" if text =~ /\A\s+\Z/
+  def output_for_text_tag : String
+    text = squish(tag.tag_text)
     lines = text.split("\n").select { |line| line !~ /\A\s+\Z/ }
     lines.map_with_index do |line, i|
       line + " " unless i == lines.size - 1
       line = wrap_quotes(line)
       padding + "text #{line}"
     end.join("\n")
+  end
+
+  private def has_content? : Bool
+    text = squish(tag.tag_text)
+    !(text =~ /\A\s+\Z/)
   end
 
   def squish(string : String)
