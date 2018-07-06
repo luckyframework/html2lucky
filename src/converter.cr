@@ -2,6 +2,7 @@ require "myhtml"
 
 class HTML2Lucky::Converter
   TEXT_TAG_NAME = "-text"
+  @output = ""
 
   def initialize(@input : String)
   end
@@ -15,6 +16,7 @@ class HTML2Lucky::Converter
   end
 
   def convert_tag(tag, depth = 0) : String
+    # Tag.new(raw_tag, output, depth: depth).convert
     method_name = method_for(tag.tag_name)
     attr_parameters = convert_attributes_to_parameters(tag.attributes).sort_by do |string|
       string.gsub(/\"/, "")
