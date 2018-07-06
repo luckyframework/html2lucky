@@ -180,8 +180,7 @@ describe HTML2Lucky::Converter do
     CODE
   end
 
-  pending "prints quotes when using underscores" do
-    # TODO: Check Lucky itself
+  it "prints quotes when using underscores" do
     input = "<div underscore_attribute='foo'></div>"
 
     output = HTML2Lucky::Converter.new(input).convert

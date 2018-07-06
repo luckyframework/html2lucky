@@ -75,7 +75,7 @@ abstract class HTML2Lucky::Tag
   end
 
   private def contains_only_alphanumeric_or_dashes?(key) : Bool
-    !(key =~ /[^\d[a-zA-Z]\-]/)
+    (key =~ /[^\da-zA-Z\-]/).nil?
   end
 
   def text_tag?(tag)
