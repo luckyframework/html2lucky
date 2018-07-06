@@ -15,14 +15,14 @@ class HTML2Lucky::TagFactory
   def build : Tag
     if no_children?(tag)
       if text_tag?(tag)
-        TextTag.new(tag)
+        TextTag.new(tag, depth)
       else
-        TagWithoutChildren.new(tag)
+        TagWithoutChildren.new(tag, depth)
       end
     elsif single_line_tag?(tag)
-      SingleLineTag.new(tag)
+      SingleLineTag.new(tag, depth)
     else
-      TagWithChildren.new(tag, depth: depth)
+      TagWithChildren.new(tag, depth)
     end
   end
 
