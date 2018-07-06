@@ -33,7 +33,7 @@ describe HTML2Lucky::Converter do
   it "handles empty tags properly" do
     input = "<div></div>"
     expected_output = <<-CODE
-    div ""
+    div
     CODE
     output = HTML2Lucky::Converter.new(input).convert
     output.should eq_html(expected_output.strip)
