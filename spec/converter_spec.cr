@@ -22,8 +22,7 @@ describe HTML2Lucky::Converter do
     input = "<div class='some-class'>First Line\nSecond Line</div>"
     expected_output = <<-CODE
     div class: "some-class" do
-      text "First Line "
-      text "Second Line"
+      text "First Line Second Line"
     end
     CODE
     output = HTML2Lucky::Converter.new(input).convert
@@ -145,10 +144,29 @@ describe HTML2Lucky::Converter do
 
     output.should eq_html <<-CODE
     div do
-      text "First "
-      text "Second "
-      text "Third"
+      text "First Second Third"
     end
+    CODE
+  end
+
+  it "doesn't print empty text in between tags" do
+    input = "<div></div>\n<div></div>"
+
+    output = HTML2Lucky::Converter.new(input).convert
+
+    output.should eq_html <<-CODE
+    div
+    div
+    CODE
+  end
+
+  it "prints attributes for tags without children" do
+    input = "<div class='foo'></div>"
+
+    output = HTML2Lucky::Converter.new(input).convert
+
+    output.should eq_html <<-CODE
+    div class: "foo"
     CODE
   end
 
