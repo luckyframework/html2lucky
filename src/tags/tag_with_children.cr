@@ -9,7 +9,8 @@ class HTML2Lucky::TagWithChildren < HTML2Lucky::Tag
     children_tags.pop if empty_text_tag?(children_tags.last)
     children_tags.each do |child_tag|
       TagFactory.new(child_tag, depth + 1).build.print_io(io)
+      io << "\n"
     end
-    io << "\n" + padding + "end"
+    io << padding + "end"
   end
 end
