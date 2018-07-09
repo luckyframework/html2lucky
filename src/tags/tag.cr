@@ -53,10 +53,6 @@ abstract class HTML2Lucky::Tag
   end
 
   def method_joiner
-
-  end
-
-  def attr_joiner
     if custom_tag?
       ", "
     else
