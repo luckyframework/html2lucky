@@ -58,22 +58,8 @@ abstract class HTML2Lucky::Tag
     tag.tag_name
   end
 
-  def method_call_with_attributes : String
-    method_call_with_attributes { |html| html }
-  end
-
-  def method_call_with_attributes : String
-    output = method_name.to_s
-    output = yield output
-    if attr_parameters.any?
-      if custom_tag?
-        output = output + ", "
-      else
-        output = output + " "
-      end
-      output = output + attr_parameters.join(", ")
-    end
-    output
+  def attr_text
+    attr_parameters.join(", ")
   end
 
   def attr_parameters
