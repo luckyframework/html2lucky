@@ -34,7 +34,6 @@ class HTML2Lucky::TagFactory
     return false if tag.children.to_a.size != 1
     child_tag = tag.children.to_a.first
     return false unless text_tag?(child_tag)
-    return true if child_tag.tag_text == ""
     return true if child_tag.tag_text =~ /\A\s*\Z/
     return false if child_tag.tag_text =~ /\n/
     true
