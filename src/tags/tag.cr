@@ -52,18 +52,30 @@ abstract class HTML2Lucky::Tag
     method_for
   end
 
-  private def tag_name
-    tag.tag_name
+  def method_joiner
+
   end
 
-  def attr_text
-    attr_parameters.join(", ")
+  def attr_joiner
+    if custom_tag?
+      ", "
+    else
+      " "
+    end
+  end
+
+  private def tag_name
+    tag.tag_name
   end
 
   def attr_parameters
     convert_attributes_to_parameters.sort_by do |string|
       string.gsub(/\"/, "")
     end
+  end
+
+  def attr_text
+    attr_parameters.join(", ")
   end
 
   def convert_attributes_to_parameters

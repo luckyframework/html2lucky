@@ -5,8 +5,7 @@ class HTML2Lucky::TagWithChildren < HTML2Lucky::Tag
     io << padding
     io << method_name
     if attr_parameters.any?
-      io << "," if custom_tag?
-      io << " "
+      io << attr_joiner
       io << attr_text
     end
     io << " do\n"
