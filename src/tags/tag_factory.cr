@@ -3,13 +3,9 @@ require "myhtml"
 class HTML2Lucky::TagFactory
   TEXT_TAG_NAME = "-text"
 
-  getter depth
+  getter depth, tag
 
-  def initialize(@node : Myhtml::Node, @depth : Int32)
-  end
-
-  private def tag
-    @node
+  def initialize(@tag : Myhtml::Node, @depth : Int32)
   end
 
   def build : Tag
