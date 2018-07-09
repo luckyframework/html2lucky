@@ -3,33 +3,15 @@ require "myhtml"
 abstract class HTML2Lucky::Tag
   TEXT_TAG_NAME = "-text"
 
-  getter depth, attributes, content
+  getter depth, tag
 
-  def initialize(@node : Myhtml::Node, @depth : Int32)
-  end
-
-  private def tag
-    @node
+  def initialize(@tag : Myhtml::Node, @depth : Int32)
   end
 
   abstract def print_io(io : IO) : IO
 
   def padding
     " " * (depth * 2)
-  end
-
-  def no_children?(tag)
-    tag.children.to_a.empty?
-  end
-
-  def single_line_tag?(tag)
-    return false if tag.children.to_a.size != 1
-    child_tag = tag.children.to_a.first
-    return false unless text_tag?(child_tag)
-    return true if child_tag.tag_text == ""
-    return true if child_tag.tag_text =~ /\A\s*\Z/
-    return false if child_tag.tag_text =~ /\n/
-    true
   end
 
   def method_for
