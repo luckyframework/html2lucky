@@ -2,6 +2,7 @@ require "myhtml"
 
 abstract class HTML2Lucky::Tag
   TEXT_TAG_NAME = "-text"
+  QUOTE = '"'
 
   getter depth, tag
 
@@ -92,6 +93,6 @@ abstract class HTML2Lucky::Tag
   end
 
   private def wrap_quotes(string : String) : String
-    "\"#{string}\""
+    QUOTE + string + QUOTE
   end
 end
