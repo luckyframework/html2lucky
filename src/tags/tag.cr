@@ -4,8 +4,6 @@ abstract class HTML2Lucky::Tag
   TEXT_TAG_NAME = "-text"
 
   getter depth, attributes, content
-  @attributes = ""
-  @content = ""
 
   def initialize(@node : Myhtml::Node, @depth : Int32)
   end
