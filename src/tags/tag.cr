@@ -14,10 +14,10 @@ abstract class HTML2Lucky::Tag
     " " * (depth * 2)
   end
 
-  def method_for
+  def method_name
     if renamed_tag_method = Lucky::BaseTags::RENAMED_TAGS.to_h.invert[tag_name]?
       renamed_tag_method
-    elsif tag_name == TEXT_TAG_NAME
+    elsif text_tag?(tag)
       "text"
     elsif custom_tag?
       "tag #{wrap_quotes(tag_name)}"
@@ -28,10 +28,6 @@ abstract class HTML2Lucky::Tag
 
   private def custom_tag?
     !(Lucky::BaseTags::TAGS + Lucky::BaseTags::EMPTY_TAGS).map(&.to_s).includes?(tag_name)
-  end
-
-  def method_name
-    method_for
   end
 
   def method_joiner
@@ -89,12 +85,9 @@ abstract class HTML2Lucky::Tag
   end
 
   def squish(string : String)
-    squished = string.gsub(/(\s)\s+/) do |str, match|
-      " "
-    end
-    squished
-      .gsub(/\A\s+/, " ")
-      .gsub(/\s+\Z/, " ")
+    string.squeeze("\n\r\t ").
+      gsub(/\A\s+/, " ").
+      gsub(/\s+\Z/, " ")
   end
 
   private def wrap_quotes(string : String) : String
