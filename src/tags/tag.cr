@@ -85,7 +85,8 @@ abstract class HTML2Lucky::Tag
   end
 
   def squish(string : String)
-    string.squeeze("\n\r\t ").
+    two_or_more_whitespace = /\s{2,}/
+    string.gsub(two_or_more_whitespace, " ").
       gsub(/\A\s+/, " ").
       gsub(/\s+\Z/, " ")
   end
