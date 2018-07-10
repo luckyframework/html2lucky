@@ -11,7 +11,11 @@ class HTML2Lucky::MultiLineTag < HTML2Lucky::Tag
       io << method_joiner
       io << attr_text
     end
+    children(io)
+    io << "\n"
+  end
 
+  private def children(io)
     if children?
       io << BLOCK_START
       tag.children.each do |child_tag|
@@ -19,7 +23,6 @@ class HTML2Lucky::MultiLineTag < HTML2Lucky::Tag
       end
       io << padding + BLOCK_END
     end
-    io << "\n"
   end
 
   private def children?
