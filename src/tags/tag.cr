@@ -68,11 +68,6 @@ abstract class HTML2Lucky::Tag
     (key =~ /[^\da-zA-Z\-]/).nil?
   end
 
-  private def has_content? : Bool
-    text = squish(tag.tag_text)
-    !(text =~ /\A\s+\Z/)
-  end
-
   def squish(string : String)
     two_or_more_whitespace = /\s{2,}/
     string.gsub(two_or_more_whitespace, " ").
