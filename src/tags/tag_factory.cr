@@ -13,12 +13,8 @@ class HTML2Lucky::TagFactory
   end
 
   private def tag_class : Tag.class
-    if no_children?(tag)
-      if text_tag?(tag)
-        TextTag
-      else
-        TagWithoutChildren
-      end
+    if text_tag?(tag)
+      TextTag
     elsif single_line_tag?(tag)
       SingleLineTag
     else
