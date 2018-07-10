@@ -75,11 +75,6 @@ abstract class HTML2Lucky::Tag
     tag.tag_name == TEXT_TAG_NAME
   end
 
-  def empty_text_tag?(tag)
-    return false unless text_tag?(tag)
-    tag.tag_text =~ /\A\s*\Z/
-  end
-
   private def has_content? : Bool
     text = squish(tag.tag_text)
     !(text =~ /\A\s+\Z/)
