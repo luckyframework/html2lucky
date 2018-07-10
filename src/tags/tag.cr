@@ -1,7 +1,6 @@
 require "myhtml"
 
 abstract class HTML2Lucky::Tag
-  TEXT_TAG_NAME = "-text"
   QUOTE = '"'
 
   getter depth, tag
@@ -18,8 +17,6 @@ abstract class HTML2Lucky::Tag
   def method_name
     if renamed_tag_method = Lucky::BaseTags::RENAMED_TAGS.to_h.invert[tag_name]?
       renamed_tag_method
-    elsif text_tag?(tag)
-      "text"
     elsif custom_tag?
       "tag #{wrap_quotes(tag_name)}"
     else
@@ -69,10 +66,6 @@ abstract class HTML2Lucky::Tag
 
   private def contains_only_alphanumeric_or_dashes?(key) : Bool
     (key =~ /[^\da-zA-Z\-]/).nil?
-  end
-
-  def text_tag?(tag)
-    tag.tag_name == TEXT_TAG_NAME
   end
 
   private def has_content? : Bool
