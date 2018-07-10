@@ -22,10 +22,6 @@ class HTML2Lucky::TagFactory
     end
   end
 
-  def no_children?(tag)
-    tag.children.to_a.empty?
-  end
-
   def single_line_tag?(tag)
     return false if tag.children.to_a.size != 1
     child_tag = tag.children.to_a.first
