@@ -1,6 +1,6 @@
 require "myhtml"
 
-class HTML2Lucky::TagWithChildren < HTML2Lucky::Tag
+class HTML2Lucky::MultiLineTag < HTML2Lucky::Tag
   BLOCK_START = " do\n"
   BLOCK_END = "end"
 

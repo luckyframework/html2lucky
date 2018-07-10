@@ -18,7 +18,7 @@ class HTML2Lucky::TagFactory
     elsif single_line_tag?(tag)
       SingleLineTag
     else
-      TagWithChildren
+      MultiLineTag
     end
   end
 
