@@ -2,6 +2,7 @@ require "myhtml"
 
 abstract class HTML2Lucky::Tag
   QUOTE = '"'
+  NAMED_TAGS = Lucky::BaseTags::TAGS + Lucky::BaseTags::EMPTY_TAGS
 
   getter depth, tag
 
@@ -25,7 +26,7 @@ abstract class HTML2Lucky::Tag
   end
 
   private def custom_tag?
-    !(Lucky::BaseTags::TAGS + Lucky::BaseTags::EMPTY_TAGS).map(&.to_s).includes?(tag_name)
+    !NAMED_TAGS.map(&.to_s).includes?(tag_name)
   end
 
   def method_joiner
