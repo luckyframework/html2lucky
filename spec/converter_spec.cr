@@ -218,7 +218,7 @@ describe HTML2Lucky::Converter do
     CODE
   end
 
-  pending "doesn't crash on invalid input" do
+  it "doesn't crash on invalid input" do
     input = "<div <p>></p>"
     HTML2Lucky::Converter.new(input).convert
   end
