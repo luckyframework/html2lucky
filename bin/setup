@@ -22,7 +22,7 @@ echo -e "\n▸ Compiling assets"
 yarn dev | indent
 
 echo -e "\n▸ Installing shards"
-crystal deps | indent
+shards install | indent
 
 echo -e "\n▸ Checking that a process runner is installed"
 # Only if this isn't CI
