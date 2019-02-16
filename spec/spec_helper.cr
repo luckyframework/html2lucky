@@ -16,3 +16,4 @@ require "./setup/**"
 include LuckyFlow::Expectations
 
 Habitat.raise_if_missing_settings!
+LuckyRecord::Migrator::Runner.new.ensure_migrated!
