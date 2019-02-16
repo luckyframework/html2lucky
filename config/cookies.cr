@@ -1,10 +1,10 @@
 require "./server"
 
-Lucky::Session.configure do |settings| |settings|
+Lucky::Session.configure do |settings|
   settings.key = "_html2lucky_session"
 end
 
-Lucky::CookieJar.configure do |settings| |settings|
+Lucky::CookieJar.configure do |settings|
   settings.on_set = ->(cookie : HTTP::Cookie) {
     # If ForceSSLHandler is enabled, only send cookies over HTTPS
     cookie.secure(Lucky::ForceSSLHandler.settings.enabled)
