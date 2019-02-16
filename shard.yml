@@ -3,12 +3,14 @@ version: 0.1.0
 
 authors:
   - Yousuf Jukaku <yaj786@gmail.com>
+  - Paul Smith
+  - Edward Loveall
 
 targets:
   html2lucky:
     main: src/html2lucky.cr
 
-crystal: 0.24.1
+crystal: 0.27
 
 license: MIT
 
