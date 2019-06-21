@@ -222,6 +222,13 @@ describe HTML2Lucky::Converter do
     input = "<div <p>></p>"
     HTML2Lucky::Converter.new(input).convert
   end
+
+  it "treats renamed tags as non-custom tags" do
+    input = "<p>Hello</p>"
+    output = HTML2Lucky::Converter.new(input).convert
+
+    output.should eq_html %q(para "Hello")
+  end
 end
 
 private def eq_html(html)
