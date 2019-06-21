@@ -1,8 +1,10 @@
 require "myhtml"
 
 abstract class HTML2Lucky::Tag
-  QUOTE = '"'
-  NAMED_TAGS = Lucky::BaseTags::TAGS + Lucky::BaseTags::EMPTY_TAGS
+  QUOTE      = '"'
+  NAMED_TAGS = Lucky::BaseTags::TAGS +
+               Lucky::BaseTags::EMPTY_TAGS +
+               Lucky::BaseTags::RENAMED_TAGS.values.to_a
 
   getter depth, tag
 
@@ -71,9 +73,9 @@ abstract class HTML2Lucky::Tag
 
   def squish(string : String)
     two_or_more_whitespace = /\s{2,}/
-    string.gsub(two_or_more_whitespace, " ").
-      gsub(/\A\s+/, " ").
-      gsub(/\s+\Z/, " ")
+    string.gsub(two_or_more_whitespace, " ")
+      .gsub(/\A\s+/, " ")
+      .gsub(/\s+\Z/, " ")
   end
 
   private def wrap_quotes(string : String) : String
