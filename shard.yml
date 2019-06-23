@@ -10,7 +10,7 @@ targets:
   html2lucky:
     main: src/html2lucky.cr
 
-crystal: 0.27
+crystal: 0.29.0
 
 license: MIT
 
