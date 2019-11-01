@@ -1,7 +1,13 @@
 FROM crystallang/crystal:0.27.0
+WORKDIR /data
+
+# For the Lucky server
+EXPOSE 5000
+# For running crystal play
+EXPOSE 8080
 
 RUN apt-get update && \
-  apt-get install -y libnss3 libgconf-2-4 chromium-browser build-essential curl libreadline-dev libevent-dev libssl-dev libxml2-dev libyaml-dev libgmp-dev git golang-go postgresql postgresql-contrib && \
+  apt-get install -y libnss3 libgconf-2-4 chromium-browser curl libreadline-dev golang-go postgresql postgresql-contrib && \
   # Set up node and yarn
   curl --silent --location https://deb.nodesource.com/setup_11.x | bash - && \
   apt-get install -y nodejs && \
@@ -16,8 +22,6 @@ RUN apt-get update && \
   # Clean things up
   apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN mkdir /data
-WORKDIR /data
 
 # Install shards
 COPY shard.* ./
@@ -28,7 +32,3 @@ COPY package.json yarn.lock ./
 RUN yarn install
 
 COPY . /data
-# For the Lucky server
-EXPOSE 5000
-# For running crystal play
-EXPOSE 8080
