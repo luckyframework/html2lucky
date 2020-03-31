@@ -10,10 +10,10 @@ require "../db/migrations/**"
 # Add/modify files in spec/setup to start/configure programs or run hooks
 #
 # By default there are scripts for setting up and cleaning the database,
-# configuring LuckyFlow, starting the app server, etc.
+# configuring Avram, starting the app server, etc.
 require "./setup/**"
 
-include LuckyFlow::Expectations
+include Avram::Expectations
 
 Habitat.raise_if_missing_settings!
 LuckyRecord::Migrator::Runner.new.ensure_migrated!

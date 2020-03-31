@@ -4,7 +4,7 @@ class Db::HelpfulSeeds < LuckyCli::Task
   banner "Add sample database records helpful for development"
 
   def call
-    # Using a LuckyRecord::Box:
+    # Using a Avram::Box:
     #
     # Use the defaults, but override just the email
     # UserBox.create &.email("me@example.com")
