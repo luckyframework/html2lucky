@@ -7,6 +7,6 @@ yarn-error.log
 /public/js
 /public/css
 /bin/
-server
+start_server
 *.dwarf
 *.local.cr
