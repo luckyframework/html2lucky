@@ -9,7 +9,7 @@ shards:
     version: 0.1.0
 
   cry:
-    github: luckyframework/cry
+    github: paulcsmith/cry
     version: 0.4.2
 
   db:
@@ -30,7 +30,7 @@ shards:
 
   lucky:
     github: luckyframework/lucky
-    version: 0.18.3
+    version: 0.19.0
 
   lucky_cli:
     github: luckyframework/lucky_cli
