@@ -3,10 +3,12 @@ require "myhtml"
 class HTML2Lucky::TextTag < HTML2Lucky::Tag
   ONLY_WHITE_SPACE = /\A\s+\Z/
 
-  def print_io(io)
+  def print_io(io) : IO
     if has_content?
       io << output_for_text_tag
       io << "\n"
+    else
+      io << ""
     end
   end
 

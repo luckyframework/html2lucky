@@ -2,9 +2,9 @@ require "myhtml"
 
 class HTML2Lucky::MultiLineTag < HTML2Lucky::Tag
   BLOCK_START = " do\n"
-  BLOCK_END = "end"
+  BLOCK_END   = "end"
 
-  def print_io(io)
+  def print_io(io) : IO
     io << padding
     io << method_name
     if attr_parameters.any?

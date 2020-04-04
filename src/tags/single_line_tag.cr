@@ -1,7 +1,7 @@
 require "myhtml"
 
 class HTML2Lucky::SingleLineTag < HTML2Lucky::Tag
-  def print_io(io)
+  def print_io(io) : IO
     content = wrap_quotes(squish(tag.children.first.tag_text))
     io << padding
     io << method_name
