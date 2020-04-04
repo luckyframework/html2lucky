@@ -6,6 +6,6 @@ class Home::Convert < BrowserAction
   post "/convert" do
     context.response.headers["X-XSS-Protection"] = "0"
     output = HTML2Lucky::Converter.new(input).convert
-    render Home::IndexPage, output: output, input: input
+    html Home::IndexPage, output: output, input: input
   end
 end

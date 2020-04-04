@@ -13,4 +13,9 @@ require "../db/migrations/**"
 # configuring Avram, starting the app server, etc.
 require "./setup/**"
 
+include Lucky::RequestExpectations
+include LuckyFlow::Expectations
+
+Avram::Migrator::Runner.new.ensure_migrated!
+Avram::SchemaEnforcer.ensure_correct_column_mappings!
 Habitat.raise_if_missing_settings!

@@ -2,19 +2,19 @@ version: 1.0
 shards:
   avram:
     github: luckyframework/avram
-    version: 0.11.2
+    version: 0.12.4
 
   blank:
     github: kostya/blank
     version: 0.1.0
 
   cry:
-    github: paulcsmith/cry
+    github: luckyframework/cry
     version: 0.4.2
 
   db:
     github: crystal-lang/crystal-db
-    version: 0.6.0
+    version: 0.8.0
 
   dexter:
     github: luckyframework/dexter
@@ -30,15 +30,15 @@ shards:
 
   lucky:
     github: luckyframework/lucky
-    version: 0.17.0
+    version: 0.18.3
 
   lucky_cli:
     github: luckyframework/lucky_cli
-    version: 0.17.0
+    version: 0.18.4
 
   lucky_flow:
     github: luckyframework/lucky_flow
-    version: 0.4.1
+    version: 0.6.2
 
   lucky_router:
     github: luckyframework/lucky_router
@@ -50,11 +50,11 @@ shards:
 
   pg:
     github: will/crystal-pg
-    version: 0.18.0
+    version: 0.20.0
 
   selenium:
     github: ysbaddaden/selenium-webdriver-crystal
-    commit: a6d0e63ab7ddc6a20923bf4157bc6247c1fa2acc
+    commit: bda2fd406c1a118251c5a2883f1e1f3af242116e
 
   shell-table:
     github: luckyframework/shell-table.cr

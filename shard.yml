@@ -10,16 +10,16 @@ targets:
   html2lucky:
     main: src/html2lucky.cr
 
-crystal: 0.30.1
+crystal: 0.31.1
 
 license: MIT
 
 dependencies:
   lucky:
     github: luckyframework/lucky
-    version: "~> 0.17.0"
+    version: "~> 0.18.0"
   lucky_flow:
     github: luckyframework/lucky_flow
-    version: "~> 0.4.0"
+    version: "~> 0.6.0"
   myhtml:
     github: kostya/myhtml
