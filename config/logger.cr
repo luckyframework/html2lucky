@@ -33,6 +33,16 @@ Lucky.configure do |settings|
   settings.logger = logger
 end
 
-Avram::Repo.configure do |settings|
+Lucky::LogHandler.configure do |settings|
+  # Skip logging static assets in development
+  if Lucky::Env.development?
+    settings.skip_if = ->(context : HTTP::Server::Context) {
+      context.request.method.downcase == "get" &&
+      context.request.resource.starts_with?(/\/css\/|\/js\/|\/assets\//)
+    }
+  end
+end
+
+Avram.configure do |settings|
   settings.logger = logger
 end
